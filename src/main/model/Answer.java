@@ -25,4 +25,10 @@ public class Answer {
     public void setValid() {
         valid = true;
     }
+
+    // MODIFIES: this
+    // EFFECTS: sets the validity of the answer to false
+    public void setInvalid() {
+        valid = false;
+    }
 }

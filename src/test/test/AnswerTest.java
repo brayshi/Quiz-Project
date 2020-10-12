@@ -30,5 +30,13 @@ public class AnswerTest {
         assertEquals(true, answer.getValid());
     }
 
+    @Test
+    void testSetInvalid() {
+        answer.setValid();
+        assertEquals(true, answer.getValid());
+        answer.setInvalid();
+        assertEquals(false, answer.getValid());
+    }
+
 
 }
