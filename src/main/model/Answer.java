@@ -16,7 +16,7 @@ public class Answer {
     }
 
     // EFFECTS: returns the boolean value of valid
-    public Boolean getValid() {
+    public Boolean isValid() {
         return valid;
     }
 

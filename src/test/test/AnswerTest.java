@@ -21,21 +21,21 @@ public class AnswerTest {
 
     @Test
     void testGetValid() {
-        assertEquals(false, answer.getValid());
+        assertEquals(false, answer.isValid());
     }
 
     @Test
     void testSetValid() {
         answer.setValid();
-        assertEquals(true, answer.getValid());
+        assertEquals(true, answer.isValid());
     }
 
     @Test
     void testSetInvalid() {
         answer.setValid();
-        assertEquals(true, answer.getValid());
+        assertEquals(true, answer.isValid());
         answer.setInvalid();
-        assertEquals(false, answer.getValid());
+        assertEquals(false, answer.isValid());
     }
 
 

@@ -4,11 +4,10 @@ import model.*;
 
 import java.util.Scanner;
 
-//Lots of code is similar to the code from TellerApp
+// runQuizApp() and its methods are similar to the code from TellerApp
 public class QuizApp {
     private static final int MAX_ANSWERS = 4;
     private QuizList quizList;
-    private Quiz demoQuiz;
     private Scanner input;
 
     // EFFECTS: runs the application for the quizzes
@@ -27,6 +26,7 @@ public class QuizApp {
         while (cont) {
             menu();
             cmd = input.next();
+            input.nextLine();
             cmd = cmd.toLowerCase();
 
             if (cmd.equals("q")) {
@@ -43,14 +43,13 @@ public class QuizApp {
         System.out.println("Choose from the following choices:");
         System.out.println("List of Quizzes = l");
         System.out.println("Create a Quiz = c");
-        System.out.println("Edit a Quiz = e");
         System.out.println("Quit = q");
     }
 
     // MODIFIES: this
     // EFFECTS: initializes by adding a quiz list and one quiz instruction demo
     private void initial() {
-        demoQuiz = new Quiz("Startup Quiz");
+        Quiz demoQuiz = new Quiz("Startup Quiz");
         demoQuiz.getQuestionList().addQuestion(new Question("Select the answer that says 'true'"));
         demoQuiz.getQuestionList().getQuestion(0).getAnswerList().addAnswer(new Answer("false"));
         demoQuiz.getQuestionList().getQuestion(0).getAnswerList().addAnswer(new Answer("true"));
@@ -69,51 +68,147 @@ public class QuizApp {
             produceList();
         } else if (cmd.equals("c")) {
             createQuiz();
-        } else if (cmd.equals("e")) {
-            editQuiz();
         } else {
-            System.out.println("not a valid command input");
+            System.out.println("not a valid command input"); // change so code doesn't redisplay menu
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: shows the list of quizzes. Input integer matching quiz to start quiz. Other inputs send back to menu
+    // EFFECTS: shows quiz list. Input matching integer to start quiz. Else sent to menu
     private void produceList() {
-        for (int i = 1; i < quizList.listSize(); i++) {
-            System.out.println(i + ": " + quizList.getQuiz(i).getName());
+        int cmd;
+        for (int i = 0; i < quizList.listSize(); i++) {
+            System.out.println((i + 1) + " - " + quizList.getQuiz(i).getName());
         }
         System.out.println("enter quiz number to access quiz");
-        System.out.println("enter 'b' to go back to the menu");
+        System.out.println("enter an integer not in the list to go back to the menu");
 
-        input = new Scanner(System.in);
-        int cmd = input.nextInt();
-
-        if (cmd > 0 && cmd <= quizList.listSize()) {
-            //stub
+        while (!input.hasNextInt()) {
+            input.nextLine();
+            System.out.println("Please input an integer");
         }
+        cmd = input.nextInt();
+        input.nextLine();
+        if (cmd > 0 && cmd <= quizList.listSize()) {
+            quizUser(quizList.getQuiz(cmd - 1));
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: starts the quiz for the user. After questions answered, sent to quiz list with score
+    public void quizUser(Quiz quiz) {
+        int correct = 0;
+        for (int i = 0; i < quiz.getQuestionList().listSize(); i++) {
+            System.out.println(quiz.getQuestionList().getQuestion(i).getQues());
+            correct += quizAnswer(quiz.getQuestionList().getQuestion(i));
+        }
+        System.out.println("Score: " + correct + "/" + quiz.getQuestionList().listSize() + "\n");
+        produceList();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: produces answer list. user chooses an answer. Adds a point to score if correct
+    public int quizAnswer(Question question) {
+        int cmd;
+
+        for (int i = 0; i < question.getAnswerList().listSize(); i++) {
+            System.out.println((i + 1) + " - " + question.getAnswerList().getAnswer(i).getStr());
+        }
+        do {
+            System.out.println("Please input an answer integer from the list");
+            while (!input.hasNextInt()) {
+                input.nextLine();
+                System.out.println("Please input an integer");
+            }
+            cmd = input.nextInt();
+            input.nextLine();
+        } while (cmd < 1 || cmd > question.getAnswerList().listSize());
+
+        if (question.getAnswerList().getAnswer(cmd - 1).isValid()) {
+            System.out.println("Correct!\n");
+            return 1;
+        }
+        System.out.println("Incorrect\n");
+        return 0;
     }
 
     // MODIFIES: this
     // EFFECTS: creates a quiz. Allow creation of questions until input "done" is inputted
     private void createQuiz() {
-        // stub
+        System.out.println("Welcome to the quiz creator! Please name the quiz: ");
+        while (!input.hasNextLine()) {
+            input.nextLine();
+            System.out.println("Please input a string, not an integer");
+        }
+        String name = input.nextLine();
+        Quiz quiz = new Quiz(name);
+
+        System.out.println("This quiz's name will be " + quiz.getName() + "\n");
+
+        System.out.println("Next we will create the questions");
+
+        while (true) {
+
+            System.out.println("Enter a new question");
+            System.out.println("Enter 'done' to be done with question creation\n");
+            while (!input.hasNextLine()) {
+                input.nextLine();
+                System.out.println("Please input a string, not an integer");
+            }
+            name = input.nextLine();
+            if (name.equals("done")) {
+                break;
+            }
+            quiz.getQuestionList().addQuestion(createQuestion(name));
+        }
+        quizList.addQuiz(quiz);
     }
 
     // MODIFIES: this
-    // EFFECTS: removes specified quiz questions, question answers, and then adds quiz questions, question answers
-    private void editQuiz() {
-        // stub
-    }
-
-    // MODIFIES: this
-    // EFFECTS: creates a question
-    private void createQuestion(String question) {
+    // EFFECTS: creates a question with answers and returns it to the quiz
+    private Question createQuestion(String question) {
+        String cmd;
         Question ques = new Question(question);
+
+        System.out.println("Add some choices for answers to this question. Only one should be correct!\n");
+        System.out.println("Input 'done' if done with adding answers");
+
+        for (int i = 0; i < MAX_ANSWERS; i++) {
+            while (!input.hasNextLine()) {
+                input.nextLine();
+                System.out.println("Please input a sentence, not an integer");
+            }
+            cmd = input.nextLine();
+            if (cmd.equals("done")) {
+                break;
+            }
+            ques.getAnswerList().addAnswer((new Answer(cmd)));
+        }
+        if (ques.getAnswerList().listSize() > 0) {
+            setTrueAnswer(ques.getAnswerList());
+        }
+        return ques;
     }
 
     // MODIFIES: this
-    // EFFECTS: creates an answer
-    private void createAnswer(String answer) {
-        Answer ans = new Answer(answer);
+    // EFFECTS: sets one of the answers given by the user as the true answer
+    private void setTrueAnswer(AnswerList answerList) {
+        int correct;
+        for (int i = 0; i < answerList.listSize(); i++) {
+            System.out.println((i + 1) + " - " + answerList.getAnswer(i).getStr());
+        }
+        System.out.println("Which answer is the correct one?");
+        do {
+            System.out.println("Please input the correct answer's integer from the list");
+            while (!input.hasNextInt()) {
+                input.nextLine();
+                System.out.println("Please input an integer");
+            }
+            correct = input.nextInt();
+            input.nextLine();
+        } while (correct < 1 || correct > answerList.listSize());
+
+        answerList.getAnswer(correct - 1).setValid();
+        System.out.println("Answer " + correct + " has been chosen");
     }
 }
