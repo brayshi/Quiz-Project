@@ -1,5 +1,6 @@
 package test;
 
+import model.QuestionList;
 import model.Quiz;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
