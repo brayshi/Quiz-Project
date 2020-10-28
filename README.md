@@ -20,3 +20,8 @@ As a user, I want to be able to set an answer to be the correct answer
 
 As a user, I want to be able to do a quiz and answer questions
 
+## Phase 2 Task 2
+
+As a user, I want to be able to save quizzes into a file
+
+As a user, I want to be able to load a file with quizzes

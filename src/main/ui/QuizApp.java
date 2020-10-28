@@ -2,6 +2,7 @@ package ui;
 
 import model.*;
 
+import java.util.List;
 import java.util.Scanner;
 
 // runQuizApp() and its methods are similar to the code from TellerApp
@@ -50,10 +51,10 @@ public class QuizApp {
     // EFFECTS: initializes by adding a quiz list and one quiz instruction demo
     private void initial() {
         Quiz demoQuiz = new Quiz("Startup Quiz");
-        demoQuiz.getQuestionList().addQuestion(new Question("Select the answer that says 'true'"));
-        demoQuiz.getQuestionList().getQuestion(0).getAnswerList().addAnswer(new Answer("false"));
-        demoQuiz.getQuestionList().getQuestion(0).getAnswerList().addAnswer(new Answer("true"));
-        demoQuiz.getQuestionList().getQuestion(0).getAnswerList().getAnswer(1).setValid();
+        demoQuiz.addQuestion(new Question("Select the answer that says 'true'"));
+        demoQuiz.getQuestion(0).addAnswer(new Answer("false"));
+        demoQuiz.getQuestion(0).addAnswer(new Answer("true"));
+        demoQuiz.getQuestion(0).getAnswer(1).setValid();
 
         quizList = new QuizList();
         quizList.addQuiz(demoQuiz);
@@ -98,11 +99,11 @@ public class QuizApp {
     // EFFECTS: starts the quiz for the user. After questions answered, sent to quiz list with score
     public void quizUser(Quiz quiz) {
         int correct = 0;
-        for (int i = 0; i < quiz.getQuestionList().listSize(); i++) {
-            System.out.println(quiz.getQuestionList().getQuestion(i).getQues());
-            correct += quizAnswer(quiz.getQuestionList().getQuestion(i));
+        for (int i = 0; i < quiz.listSize(); i++) {
+            System.out.println(quiz.getQuestion(i).getQues());
+            correct += quizAnswer(quiz.getQuestion(i));
         }
-        System.out.println("Score: " + correct + "/" + quiz.getQuestionList().listSize() + "\n");
+        System.out.println("Score: " + correct + "/" + quiz.listSize() + "\n");
         produceList();
     }
 
@@ -111,8 +112,8 @@ public class QuizApp {
     public int quizAnswer(Question question) {
         int cmd;
 
-        for (int i = 0; i < question.getAnswerList().listSize(); i++) {
-            System.out.println((i + 1) + " - " + question.getAnswerList().getAnswer(i).getStr());
+        for (int i = 0; i < question.listSize(); i++) {
+            System.out.println((i + 1) + " - " + question.getAnswer(i).getStr());
         }
         do {
             System.out.println("Please input an answer integer from the list");
@@ -122,9 +123,9 @@ public class QuizApp {
             }
             cmd = input.nextInt();
             input.nextLine();
-        } while (cmd < 1 || cmd > question.getAnswerList().listSize());
+        } while (cmd < 1 || cmd > question.listSize());
 
-        if (question.getAnswerList().getAnswer(cmd - 1).isValid()) {
+        if (question.getAnswer(cmd - 1).isValid()) {
             System.out.println("Correct!\n");
             return 1;
         }
@@ -159,7 +160,7 @@ public class QuizApp {
             if (name.equals("done")) {
                 break;
             }
-            quiz.getQuestionList().addQuestion(createQuestion(name));
+            quiz.addQuestion(createQuestion(name));
         }
         quizList.addQuiz(quiz);
     }
@@ -182,20 +183,20 @@ public class QuizApp {
             if (cmd.equals("done")) {
                 break;
             }
-            ques.getAnswerList().addAnswer((new Answer(cmd)));
+            ques.addAnswer((new Answer(cmd)));
         }
-        if (ques.getAnswerList().listSize() > 0) {
-            setTrueAnswer(ques.getAnswerList());
+        if (ques.listSize() > 0) {
+            setTrueAnswer(ques);
         }
         return ques;
     }
 
     // MODIFIES: this
     // EFFECTS: sets one of the answers given by the user as the true answer
-    private void setTrueAnswer(AnswerList answerList) {
+    private void setTrueAnswer(Question question) {
         int correct;
-        for (int i = 0; i < answerList.listSize(); i++) {
-            System.out.println((i + 1) + " - " + answerList.getAnswer(i).getStr());
+        for (int i = 0; i < question.listSize(); i++) {
+            System.out.println((i + 1) + " - " + question.getAnswer(i).getStr());
         }
         System.out.println("Which answer is the correct one?");
         do {
@@ -206,9 +207,9 @@ public class QuizApp {
             }
             correct = input.nextInt();
             input.nextLine();
-        } while (correct < 1 || correct > answerList.listSize());
+        } while (correct < 1 || correct > question.listSize());
 
-        answerList.getAnswer(correct - 1).setValid();
+        question.getAnswer(correct - 1).setValid();
         System.out.println("Answer " + correct + " has been chosen");
     }
 }

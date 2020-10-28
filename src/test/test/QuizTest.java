@@ -1,6 +1,5 @@
 package test;
 
-import model.QuestionList;
 import model.Question;
 import model.Quiz;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,10 +24,10 @@ public class QuizTest {
     void testGetQuestionList() {
         Question question = new Question("is this true?");
 
-        assertEquals(0, quiz.getQuestionList().listSize());
+        assertEquals(0, quiz.listSize());
 
-        quiz.getQuestionList().addQuestion(question);
-        assertEquals(question, quiz.getQuestionList().getQuestion(0));
-        assertEquals(1, quiz.getQuestionList().listSize());
+        quiz.addQuestion(question);
+        assertEquals(question, quiz.getQuestion(0));
+        assertEquals(1, quiz.listSize());
     }
 }
