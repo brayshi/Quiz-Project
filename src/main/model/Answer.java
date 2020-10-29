@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONObject;
+
+import java.util.Objects;
+
 public class Answer {
     private String ans;
     private Boolean valid;
@@ -30,5 +34,12 @@ public class Answer {
     // EFFECTS: sets the validity of the answer to false
     public void setInvalid() {
         valid = false;
+    }
+
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("answer", ans);
+        json.put("boolean", valid);
+        return json;
     }
 }

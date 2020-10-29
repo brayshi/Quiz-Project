@@ -1,0 +1,46 @@
+{
+
+  "quizzes": [
+    {
+      "quiz": "demo",
+      "questions": [
+        {
+          "question": "Choose 'yes'",
+          "answers": [
+            {
+              "answer": "no",
+              "boolean": false
+            },
+            {
+              "answer": "yes",
+              "boolean": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "quiz": "test",
+      "questions": [
+        {
+          "question": "Choose 'false'",
+          "answers": [
+            {
+              "answer": "false",
+              "boolean": true
+            },
+            {
+              "answer": "true-ish?",
+              "boolean": false
+            },
+            {
+              "answer": "false-ish",
+              "boolean": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "name": "My Quiz List"
+}

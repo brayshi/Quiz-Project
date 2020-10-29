@@ -1,0 +1,13 @@
+{
+    "name": "My Quiz List",
+    "quizzes": [{
+        "quiz": "demo",
+        "questions": [{
+            "question": "choose 'yes'",
+            "answers": [{
+                "boolean": true,
+                "answer": "yes"
+            }]
+        }]
+    }]
+}

@@ -1,5 +1,6 @@
 package test;
 
+import model.Question;
 import model.Quiz;
 import model.QuizList;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +13,7 @@ public class QuizListTest {
 
     @BeforeEach
     void setUp() {
-        quizList = new QuizList();
+        quizList = new QuizList("Remember to save!");
     }
 
     @Test

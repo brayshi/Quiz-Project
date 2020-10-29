@@ -1,15 +1,22 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 // runQuizApp() and its methods are similar to the code from TellerApp
 public class QuizApp {
+    private static final String JSON_STORE = "./data/quizlist.json";
     private static final int MAX_ANSWERS = 4;
     private QuizList quizList;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the application for the quizzes
     public QuizApp() {
@@ -56,7 +63,7 @@ public class QuizApp {
         demoQuiz.getQuestion(0).addAnswer(new Answer("true"));
         demoQuiz.getQuestion(0).getAnswer(1).setValid();
 
-        quizList = new QuizList();
+        quizList = new QuizList("Remember to save!");
         quizList.addQuiz(demoQuiz);
 
         input = new Scanner(System.in);
@@ -211,5 +218,28 @@ public class QuizApp {
 
         question.getAnswer(correct - 1).setValid();
         System.out.println("Answer " + correct + " has been chosen");
+    }
+
+    // EFFECTS: saves the QuizList to file
+    private void saveQuizList() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(quizList);
+            jsonWriter.close();
+            System.out.println("Saved " + quizList.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads QuizList from file
+    private void loadQuizList() {
+        try {
+            quizList = jsonReader.read();
+            System.out.println("Loaded " + quizList.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }

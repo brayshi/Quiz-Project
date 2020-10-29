@@ -21,6 +21,27 @@ public class QuizTest {
     }
 
     @Test
+    void testEquals() {
+        Quiz quiz1 = new Quiz("test");
+        Quiz quiz2 = new Quiz("test");
+        Quiz quiz3 = new Quiz("test");
+        Question question = new Question("hello?");
+
+        quiz1.addQuestion(question);
+        quiz2.addQuestion(question);
+        quiz3.addQuestion(new Question("say hello"));
+        assertFalse(quiz2.equals(quiz3));
+        assertTrue(quiz1.equals(quiz2));
+    }
+
+    @Test
+    void testHashCode() {
+        Quiz quiz1 = new Quiz("test");
+        Quiz quiz2 = new Quiz("test");
+        assertEquals(quiz2.hashCode(), quiz1.hashCode());
+    }
+
+    @Test
     void testGetQuestionList() {
         Question question = new Question("is this true?");
 
