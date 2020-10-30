@@ -12,6 +12,17 @@ import java.util.List;
 public class JsonTest {
     protected void checkQuiz(String name, Quiz createdQuiz, Quiz quiz) {
         assertEquals(name, quiz.getName());
-        assertTrue(createdQuiz.equals(quiz));
+        assertTrue(checkQuestions(createdQuiz, quiz));
+    }
+
+    private boolean checkQuestions(Quiz quiz1, Quiz quiz2) {
+        if (quiz1.listSize() == quiz2.listSize()) {
+            for (int i = 0; i < quiz1.listSize(); i++) {
+                if (!quiz1.getQuestion(i).getQues().equals(quiz2.getQuestion(i).getQues())) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

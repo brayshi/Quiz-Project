@@ -55,6 +55,7 @@ public class JsonWriterTest extends JsonTest {
             quizList.getQuiz(0).addQuestion(new Question("choose 'yes'"));
             quizList.getQuiz(0).getQuestion(0).addAnswer(new Answer("yes"));
             quizList.getQuiz(0).getQuestion(0).getAnswer(0).setValid();
+            QuizList oldQuizList = quizList;
 
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralQuizList.json");
             writer.open();
@@ -64,9 +65,9 @@ public class JsonWriterTest extends JsonTest {
             JsonReader reader = new JsonReader("./data/testWriterGeneralQuizList.json");
             quizList = reader.read();
             assertEquals("My Quiz List", quizList.getName());
-            List<Quiz> quizzes = quizList.getQuizzes();
-            assertEquals(2, quizzes.size());
-            checkQuiz("demo", quizList.getQuiz(0) , quizzes.get(0));
+            List<Quiz> quizzes = quizList.getUnmodifiedQuizzes();
+            assertEquals(1, quizzes.size());
+            checkQuiz("demo", oldQuizList.getQuiz(0) , quizzes.get(0));
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

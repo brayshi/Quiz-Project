@@ -1,10 +1,12 @@
 package test;
 
-import model.Question;
 import model.Quiz;
 import model.QuizList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,6 +16,39 @@ public class QuizListTest {
     @BeforeEach
     void setUp() {
         quizList = new QuizList("Remember to save!");
+    }
+
+    @Test
+    void testGetName() {
+        assertEquals("Remember to save!", quizList.getName());
+    }
+
+    @Test
+    void testGetQuizzes() {
+        assertEquals(0, quizList.listSize());
+
+        Quiz testQuiz = new Quiz("test");
+        quizList.addQuiz(testQuiz);
+        assertEquals(1, quizList.listSize());
+        assertEquals(testQuiz, quizList.getQuiz(0));
+
+        Quiz newQuiz = new Quiz("new");
+        quizList.addQuiz(newQuiz);
+        assertEquals(2, quizList.listSize());
+        assertEquals(testQuiz, quizList.getQuiz(0));
+        assertEquals(newQuiz, quizList.getQuiz(1));
+    }
+
+    @Test
+    void testGetUnmodifiedQuizzes() {
+        assertEquals(Collections.unmodifiableList(quizList.getQuizzes()), quizList.getUnmodifiedQuizzes());
+        assertEquals(0 , quizList.getUnmodifiedQuizzes().size());
+
+        Quiz testQuiz = new Quiz("test");
+        quizList.addQuiz(testQuiz);
+
+        assertEquals(Collections.unmodifiableList(quizList.getQuizzes()), quizList.getUnmodifiedQuizzes());
+        assertEquals(1 , quizList.getUnmodifiedQuizzes().size());
     }
 
     @Test

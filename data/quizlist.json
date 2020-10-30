@@ -1,0 +1,115 @@
+{
+    "name": "Remember to save!",
+    "quizzes": [
+        {
+            "quiz": "Startup Quiz",
+            "questions": [{
+                "question": "Select the answer that says 'true'",
+                "answers": [
+                    {
+                        "boolean": false,
+                        "answer": "false"
+                    },
+                    {
+                        "boolean": true,
+                        "answer": "true"
+                    }
+                ]
+            }]
+        },
+        {
+            "quiz": "Obi Wan Quotes",
+            "questions": [
+                {
+                    "question": "Hello there!",
+                    "answers": [
+                        {
+                            "boolean": true,
+                            "answer": "General Kenobi!"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "Ew gross"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "Have you ever heard the tragedy of Darth Plagueis the Wise?"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "Meesa kill you!"
+                        }
+                    ]
+                },
+                {
+                    "question": "Chancellor Palpatine is evil!",
+                    "answers": [
+                        {
+                            "boolean": true,
+                            "answer": "From my point of view the jedi are evil!"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "Oh wait you right"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "NOOOOOOOO"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "Wait then why are we fighting?"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "quiz": "Anakin",
+            "questions": [
+                {
+                    "question": "What is Anakin's last name?",
+                    "answers": [
+                        {
+                            "boolean": true,
+                            "answer": "Skywalker"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "The walker of skies"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "Dismantle mines, yes?"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "Dooku"
+                        }
+                    ]
+                },
+                {
+                    "question": "Who does Anakin become?",
+                    "answers": [
+                        {
+                            "boolean": false,
+                            "answer": "Chancellor Palpatine"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "The Senate"
+                        },
+                        {
+                            "boolean": true,
+                            "answer": "Darth Vader"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "A Jedi Master"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

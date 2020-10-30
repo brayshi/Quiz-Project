@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import persistence.JsonReader;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,7 +45,7 @@ public class JsonReaderTest extends JsonTest {
         try {
             QuizList quizList = reader.read();
             assertEquals("My Quiz List", quizList.getName());
-            List<Quiz> quizzes = quizList.getQuizzes();
+            List<Quiz> quizzes = quizList.getUnmodifiedQuizzes();
             assertEquals(2, quizzes.size());
             checkQuiz("demo", createQuiz1(), quizzes.get(0));
             checkQuiz("test", createQuiz2(), quizzes.get(1));

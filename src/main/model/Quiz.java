@@ -5,12 +5,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+// Represents a quiz to be added to the quiz list in the application
 public class Quiz {
     private String name;
     private List<Question> questionList;
 
+    // EFFECTS: constructs a quiz with a name and list of questions
     public Quiz(String name) {
         this.name = name;
         questionList = new ArrayList<>();
@@ -39,31 +40,13 @@ public class Quiz {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Quiz quiz = (Quiz) o;
-        return name.equals(quiz.name) &&
-                questionList.equals(quiz.questionList);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, questionList);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: removes a question from the list
-    public void removeQuestion(Question question) {
-        questionList.remove(question);
-    }
-
     // EFFECTS: returns the size of the list
     public int listSize() {
         return questionList.size();
     }
 
+    // MODIFIES: quizList
+    // EFFECTS: converts JSON array's objects into questions
     public void fromJson(Quiz quiz, JSONArray jsonArray) {
         JSONObject questionObject;
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -76,6 +59,7 @@ public class Quiz {
         }
     }
 
+    // EFFECTS: converts quiz into JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("quiz", name);

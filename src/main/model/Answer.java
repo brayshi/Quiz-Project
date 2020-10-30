@@ -2,13 +2,12 @@ package model;
 
 import org.json.JSONObject;
 
-import java.util.Objects;
-
+// Represents an answer within a question
 public class Answer {
     private String ans;
     private Boolean valid;
 
-    // EFFECTS: sets up an Answer
+    // EFFECTS: constructs an Answer initially false for a question
     public Answer(String ans) {
         this.ans = ans;
         valid = false;
@@ -36,6 +35,7 @@ public class Answer {
         valid = false;
     }
 
+    // EFFECTS: converts answer into JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("answer", ans);

@@ -6,12 +6,11 @@ import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 
 // runQuizApp() and its methods are similar to the code from TellerApp
 public class QuizApp {
-    private static final String JSON_STORE = "./data/quizlist.json";
+    private static final String JSON_STORE = "./data/quizList.json";
     private static final int MAX_ANSWERS = 4;
     private QuizList quizList;
     private Scanner input;
@@ -20,6 +19,8 @@ public class QuizApp {
 
     // EFFECTS: runs the application for the quizzes
     public QuizApp() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runQuizApp();
     }
 
@@ -51,6 +52,8 @@ public class QuizApp {
         System.out.println("Choose from the following choices:");
         System.out.println("List of Quizzes = l");
         System.out.println("Create a Quiz = c");
+        System.out.println("Load a Quiz = v");
+        System.out.println("Save a Quiz = s");
         System.out.println("Quit = q");
     }
 
@@ -76,6 +79,10 @@ public class QuizApp {
             produceList();
         } else if (cmd.equals("c")) {
             createQuiz();
+        } else if (cmd.equals("v")) {
+            loadQuizList();
+        } else if (cmd.equals("s")) {
+            saveQuizList();
         } else {
             System.out.println("not a valid command input"); // change so code doesn't redisplay menu
         }

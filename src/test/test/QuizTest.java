@@ -21,27 +21,6 @@ public class QuizTest {
     }
 
     @Test
-    void testEquals() {
-        Quiz quiz1 = new Quiz("test");
-        Quiz quiz2 = new Quiz("test");
-        Quiz quiz3 = new Quiz("test");
-        Question question = new Question("hello?");
-
-        quiz1.addQuestion(question);
-        quiz2.addQuestion(question);
-        quiz3.addQuestion(new Question("say hello"));
-        assertFalse(quiz2.equals(quiz3));
-        assertTrue(quiz1.equals(quiz2));
-    }
-
-    @Test
-    void testHashCode() {
-        Quiz quiz1 = new Quiz("test");
-        Quiz quiz2 = new Quiz("test");
-        assertEquals(quiz2.hashCode(), quiz1.hashCode());
-    }
-
-    @Test
     void testGetQuestionList() {
         Question question = new Question("is this true?");
 
@@ -49,6 +28,55 @@ public class QuizTest {
 
         quiz.addQuestion(question);
         assertEquals(question, quiz.getQuestion(0));
+        assertEquals(1, quiz.listSize());
+    }
+
+    @Test
+    void testGetQuestion() {
+        Question question = new Question("how?");
+        Question why = new Question("why?");
+
+        quiz.addQuestion(question);
+        quiz.addQuestion(why);
+
+        assertEquals(question, quiz.getQuestion(0));
+        assertEquals(why, quiz.getQuestion(1));
+    }
+
+    @Test
+    void testListSize() {
+        assertEquals(0, quiz.listSize());
+
+        quiz.addQuestion(new Question("test 1"));
+        assertEquals(1, quiz.listSize());
+
+        quiz.addQuestion(new Question("test 2"));
+        assertEquals(2, quiz.listSize());
+    }
+
+    @Test
+    void testAddQuestionNotPresent() {
+        Question q1 = new Question("question 1");
+        Question q2 = new Question("question 2");
+
+        quiz.addQuestion(q1);
+        assertEquals(q1, quiz.getQuestion(0));
+        assertEquals(1, quiz.listSize());
+
+        quiz.addQuestion(q2);
+        assertEquals(q2, quiz.getQuestion(1));
+        assertEquals(2, quiz.listSize());
+    }
+
+    @Test
+    void testAddQuestionPresent() {
+        Question q = new Question("test");
+
+        quiz.addQuestion(q);
+        assertEquals(q, quiz.getQuestion(0));
+        assertEquals(1, quiz.listSize());
+
+        quiz.addQuestion(q);
         assertEquals(1, quiz.listSize());
     }
 }

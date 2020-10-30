@@ -7,12 +7,15 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 // Writable implementation mostly from JsonSerializationDemo
 
+// Represents a list of quizzes within the application
 public class QuizList implements Writable {
     private String name;
     private List<Quiz> quizzes;
 
+    // EFFECTS: constructs a list of quizzes with a name
     public QuizList(String name) {
         this.name = name;
         quizzes = new ArrayList<>();
@@ -23,8 +26,13 @@ public class QuizList implements Writable {
         return name;
     }
 
-    // EFFECTS: returns an unmodifiable list of quizzes in this quizList
+    // EFFECTS: getter for quizzes
     public List<Quiz> getQuizzes() {
+        return quizzes;
+    }
+
+    // EFFECTS: returns an unmodifiable list of quizzes from this quizList
+    public List<Quiz> getUnmodifiedQuizzes() {
         return Collections.unmodifiableList(quizzes);
     }
 
@@ -52,6 +60,7 @@ public class QuizList implements Writable {
         return quizzes.size();
     }
 
+    // EFFECTS: converts quiz list to json file
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -71,6 +80,8 @@ public class QuizList implements Writable {
         return jsonArray;
     }
 
+    // MODIFIES: quizList
+    // EFFECTS: Converts JSON array's objects into quizzes
     public void fromJson(QuizList quizList, JSONArray jsonArray) {
         JSONObject quizObject;
         for (int i = 0; i < jsonArray.length(); i++) {

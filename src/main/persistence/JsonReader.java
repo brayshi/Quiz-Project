@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 // NOTE: Heavily based on JsonSerializationDemo Project Reader
 
+// Represents a reader that reads a JSON representation of a quiz List to file
 public class JsonReader {
     private String source;
 

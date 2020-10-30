@@ -5,12 +5,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+// Represents a Question that is part of a Quiz
 public class Question {
     private String ques;
     private List<Answer> answerList;
 
+    // EFFECTS: constructs a question with a list of answers
     public Question(String q) {
         this.ques = q;
         answerList = new ArrayList<>();
@@ -34,17 +35,12 @@ public class Question {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: removes an answer from the list
-    public void removeAnswer(Answer ans) {
-        answerList.remove(ans);
-    }
-
     // EFFECTS: returns the size of the list
     public int listSize() {
         return answerList.size();
     }
 
+    // EFFECTS: converts question into JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("question", ques);
@@ -62,6 +58,8 @@ public class Question {
         return jsonArray;
     }
 
+    // MODIFIES: quizList
+    // EFFECTS: converts Json array's objects into answers
     public void fromJson(Question question, JSONArray jsonArray) {
         JSONObject answerObject;
 

@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 
 // NOTE: this code is from the JsonSerializationDemo project
 
-// Represents a writer that writes JSON representation of workroom to file
+// Represents a writer that writes JSON representation of a quiz list to file
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -28,7 +28,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of quiz list to file
     public void write(QuizList quizList) {
         JSONObject json = quizList.toJson();
         saveToFile(json.toString(TAB));
