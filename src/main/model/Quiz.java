@@ -22,11 +22,6 @@ public class Quiz {
         return name;
     }
 
-    // EFFECTS: obtains the question list
-    public List<Question> getQuestionList() {
-        return questionList;
-    }
-
     // EFFECTS: returns a question from the list with index int i
     public Question getQuestion(int i) {
         return questionList.get(i);
