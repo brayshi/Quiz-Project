@@ -11,7 +11,7 @@ public class Quiz {
     private String name;
     private List<Question> questionList;
 
-    // EFFECTS: constructs a quiz with a name and list of questions
+    // EFFECTS: constructs a quiz with a name and list of question
     public Quiz(String name) {
         this.name = name;
         questionList = new ArrayList<>();
