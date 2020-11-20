@@ -38,5 +38,24 @@ public class AnswerTest {
         assertEquals(false, answer.isValid());
     }
 
+    @Test
+    void testEquals() {
+        Answer copyAnswer = new Answer(answer.getStr());
+        assertTrue(copyAnswer.equals(answer) && answer.equals(copyAnswer));
+
+        copyAnswer.setValid();
+        assertFalse(copyAnswer.equals(answer) && answer.equals(copyAnswer));
+
+        answer.setValid();
+        assertTrue(copyAnswer.equals(answer) && answer.equals(copyAnswer));
+    }
+
+    @Test
+    void testHashcode() {
+        Answer copyAnswer = new Answer(answer.getStr());
+        assertTrue(copyAnswer.equals(answer) && answer.equals(copyAnswer));
+        assertEquals(copyAnswer.hashCode(), answer.hashCode());
+    }
+
 
 }
