@@ -41,7 +41,10 @@ public class AnswerTest {
     @Test
     void testEquals() {
         Answer copyAnswer = new Answer(answer.getStr());
+        String ans = answer.getStr();
+
         assertTrue(copyAnswer.equals(answer) && answer.equals(copyAnswer));
+        assertFalse(copyAnswer.equals(ans) && answer.equals(ans));
 
         copyAnswer.setValid();
         assertFalse(copyAnswer.equals(answer) && answer.equals(copyAnswer));
