@@ -46,6 +46,8 @@ public class AnswerTest {
         assertTrue(copyAnswer.equals(answer) && answer.equals(copyAnswer));
         assertFalse(copyAnswer.equals(ans) && answer.equals(ans));
 
+        assertFalse(answer.equals(null));
+
         copyAnswer.setValid();
         assertFalse(copyAnswer.equals(answer) && answer.equals(copyAnswer));
 
