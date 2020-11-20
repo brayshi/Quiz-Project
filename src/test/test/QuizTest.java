@@ -21,6 +21,14 @@ public class QuizTest {
     }
 
     @Test
+    void testSetName() {
+        assertEquals("demo", quiz.getName());
+
+        quiz.setName("hello");
+        assertEquals("hello", quiz.getName());
+    }
+
+    @Test
     void testGetQuestionList() {
         Question question = new Question("is this true?");
 

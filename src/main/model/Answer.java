@@ -2,6 +2,8 @@ package model;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 // Represents an answer within a question
 public class Answer {
     private String ans;
@@ -41,5 +43,23 @@ public class Answer {
         json.put("answer", ans);
         json.put("boolean", valid);
         return json;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Answer answer = (Answer) o;
+        return ans.equals(answer.ans)
+                && valid.equals(answer.valid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ans, valid);
     }
 }

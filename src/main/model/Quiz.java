@@ -22,6 +22,11 @@ public class Quiz {
         return name;
     }
 
+    // EFFECTS: sets the name of the quiz
+    public void setName(String name) {
+        this.name = name;
+    }
+
     // EFFECTS: returns a question from the list with index int i
     public Question getQuestion(int i) {
         return questionList.get(i);

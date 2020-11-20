@@ -110,6 +110,53 @@
                     ]
                 }
             ]
+        },
+        {
+            "quiz": "Dobby?",
+            "questions": [
+                {
+                    "question": "Which is the first book Dobby showed up in?",
+                    "answers": [
+                        {
+                            "boolean": false,
+                            "answer": "Prisoner of Azkaban"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "Dobby is free"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "The Philosopher's Stone"
+                        },
+                        {
+                            "boolean": true,
+                            "answer": "The Chamber of Secrets"
+                        }
+                    ]
+                },
+                {
+                    "question": "What was Dobby given to be freed?",
+                    "answers": [
+                        {
+                            "boolean": false,
+                            "answer": "Legolas"
+                        },
+                        {
+                            "boolean": true,
+                            "answer": "Harry's wet socc"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "a soccer ball"
+                        },
+                        {
+                            "boolean": false,
+                            "answer": "Malfoy's wand"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
