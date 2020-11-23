@@ -1,5 +1,6 @@
 package test;
 
+import exceptions.MultipleValidException;
 import model.Answer;
 import model.Question;
 import model.Quiz;
@@ -53,7 +54,11 @@ public class JsonWriterTest extends JsonTest {
 
             quizList.addQuiz(new Quiz("demo"));
             quizList.getQuiz(0).addQuestion(new Question("choose 'yes'"));
-            quizList.getQuiz(0).getQuestion(0).addAnswer(new Answer("yes"));
+            try {
+                quizList.getQuiz(0).getQuestion(0).addAnswer(new Answer("yes"));
+            } catch (MultipleValidException e) {
+                System.out.println("failed to add new answer: Question already had one valid answer");
+            }
             quizList.getQuiz(0).getQuestion(0).getAnswer(0).setValid();
             QuizList oldQuizList = quizList;
 

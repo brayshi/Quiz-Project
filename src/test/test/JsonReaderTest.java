@@ -1,5 +1,6 @@
 package test;
 
+import exceptions.MultipleValidException;
 import model.Answer;
 import model.Question;
 import model.Quiz;
@@ -57,8 +58,16 @@ public class JsonReaderTest extends JsonTest {
     private Quiz createQuiz1() {
         Quiz quiz1 = new Quiz("demo");
         quiz1.addQuestion(new Question("Choose 'yes'"));
-        quiz1.getQuestion(0).addAnswer(new Answer("no"));
-        quiz1.getQuestion(0).addAnswer(new Answer("yes"));
+        try {
+            quiz1.getQuestion(0).addAnswer(new Answer("no"));
+        } catch (MultipleValidException e) {
+            System.out.println("failed to add new answer: Question already had one valid answer");
+        }
+        try {
+            quiz1.getQuestion(0).addAnswer(new Answer("yes"));
+        } catch (MultipleValidException e) {
+            System.out.println("failed to add new answer: Question already had one valid answer");
+        }
         quiz1.getQuestion(0).getAnswer(1).setValid();
 
         return quiz1;
@@ -67,9 +76,21 @@ public class JsonReaderTest extends JsonTest {
     private Quiz createQuiz2() {
         Quiz quiz2 = new Quiz("test");
         quiz2.addQuestion(new Question("Choose 'false'"));
-        quiz2.getQuestion(0).addAnswer(new Answer("false"));
-        quiz2.getQuestion(0).addAnswer(new Answer("true-ish?"));
-        quiz2.getQuestion(0).addAnswer(new Answer("false-ish?"));
+        try {
+            quiz2.getQuestion(0).addAnswer(new Answer("false"));
+        } catch (MultipleValidException e) {
+            System.out.println("failed to add new answer: Question already had one valid answer");
+        }
+        try {
+            quiz2.getQuestion(0).addAnswer(new Answer("true-ish?"));
+        } catch (MultipleValidException e) {
+            System.out.println("failed to add new answer: Question already had one valid answer");
+        }
+        try {
+            quiz2.getQuestion(0).addAnswer(new Answer("false-ish?"));
+        } catch (MultipleValidException e) {
+            System.out.println("failed to add new answer: Question already had one valid answer");
+        }
         quiz2.getQuestion(0).getAnswer(0).setValid();
 
         return quiz2;

@@ -1,5 +1,6 @@
 package test;
 
+import exceptions.MultipleValidException;
 import model.Answer;
 import model.Question;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +27,11 @@ public class QuestionTest {
 
         assertEquals(0, question.listSize());
 
-        question.addAnswer(answer);
+        try {
+            question.addAnswer(answer);
+        } catch (MultipleValidException e) {
+            fail("Expected no exception");
+        }
         assertEquals(answer, question.getAnswer(0));
         assertEquals(1, question.listSize());
     }
@@ -35,10 +40,18 @@ public class QuestionTest {
     void testListSize() {
         assertEquals(0, question.listSize());
 
-        question.addAnswer(new Answer("ans 1"));
+        try {
+            question.addAnswer(new Answer("ans 1"));
+        } catch (MultipleValidException e) {
+            fail("Expected no exception");
+        }
         assertEquals(1, question.listSize());
 
-        question.addAnswer(new Answer("ans 2"));
+        try {
+            question.addAnswer(new Answer("ans 2"));
+        } catch (MultipleValidException e) {
+            fail("Expected no exception");
+        }
         assertEquals(2, question.listSize());
     }
 
@@ -47,11 +60,19 @@ public class QuestionTest {
         Answer a1 = new Answer("ans 1");
         Answer a2 = new Answer("ans 2");
 
-        question.addAnswer(a1);
+        try {
+            question.addAnswer(a1);
+        } catch (MultipleValidException e) {
+            fail("Expected no exception");
+        }
         assertEquals(a1, question.getAnswer(0));
         assertEquals(1, question.listSize());
 
-        question.addAnswer(a2);
+        try {
+            question.addAnswer(a2);
+        } catch (MultipleValidException e) {
+            fail("Expected no exception");
+        }
         assertEquals(a2, question.getAnswer(1));
         assertEquals(2, question.listSize());
     }
@@ -60,11 +81,41 @@ public class QuestionTest {
     void testAddQuestionPresent() {
         Answer answer = new Answer("answer");
 
-        question.addAnswer(answer);
+        try {
+            question.addAnswer(answer);
+        } catch (MultipleValidException e) {
+            fail("Expected no exception");
+        }
         assertEquals(answer, question.getAnswer(0));
         assertEquals(1, question.listSize());
 
-        question.addAnswer(answer);
+        try {
+            question.addAnswer(answer);
+        } catch (MultipleValidException e) {
+            fail("Expected no exception");
+        }
         assertEquals(1, question.listSize());
+    }
+
+    @Test
+    void testAddQuestionTwoValid() {
+        Answer a1 = new Answer("I'm right!");
+        a1.setValid();
+
+        Answer a2 = new Answer("No, I'm right!");
+        a2.setValid();
+
+        try {
+            question.addAnswer(a1);
+        } catch (MultipleValidException e) {
+            fail("Expected no exception");
+        }
+
+        try {
+            question.addAnswer(a2);
+            fail("Expected MultipleValidException");
+        } catch (MultipleValidException e) {
+            // expected
+        }
     }
 }

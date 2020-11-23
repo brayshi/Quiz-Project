@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.MultipleValidException;
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -62,8 +63,16 @@ public class QuizApp {
     private void initial() {
         Quiz demoQuiz = new Quiz("Startup Quiz");
         demoQuiz.addQuestion(new Question("Select the answer that says 'true'"));
-        demoQuiz.getQuestion(0).addAnswer(new Answer("false"));
-        demoQuiz.getQuestion(0).addAnswer(new Answer("true"));
+        try {
+            demoQuiz.getQuestion(0).addAnswer(new Answer("false"));
+        } catch (MultipleValidException e) {
+            System.out.println("failed to add new answer: Question already had one valid answer");
+        }
+        try {
+            demoQuiz.getQuestion(0).addAnswer(new Answer("true"));
+        } catch (MultipleValidException e) {
+            System.out.println("failed to add new answer: Question already had one valid answer");
+        }
         demoQuiz.getQuestion(0).getAnswer(1).setValid();
 
         quizList = new QuizList("Remember to save!");
@@ -75,16 +84,23 @@ public class QuizApp {
     // MODIFIES: this
     // EFFECTS: causes the effect of the command inputted if valid
     private void cmdValue(String cmd) {
-        if (cmd.equals("l")) {
-            produceList();
-        } else if (cmd.equals("c")) {
-            createQuiz();
-        } else if (cmd.equals("v")) {
-            loadQuizList();
-        } else if (cmd.equals("s")) {
-            saveQuizList();
-        } else {
-            System.out.println("not a valid command input"); // change so code doesn't redisplay menu
+        switch (cmd) {
+            case "l":
+                produceList();
+                break;
+            case "c":
+                createQuiz();
+                break;
+            case "v":
+                loadQuizList();
+                break;
+            case "s":
+                saveQuizList();
+                break;
+            default:
+                System.out.println("not a valid command input"); // change so code doesn't redisplay menu
+
+                break;
         }
     }
 
@@ -197,7 +213,11 @@ public class QuizApp {
             if (cmd.equals("done")) {
                 break;
             }
-            ques.addAnswer((new Answer(cmd)));
+            try {
+                ques.addAnswer((new Answer(cmd)));
+            } catch (MultipleValidException e) {
+                System.out.println("failed to add new answer: Question already had one valid answer");
+            }
         }
         if (ques.listSize() > 0) {
             setTrueAnswer(ques);

@@ -25,3 +25,9 @@ As a user, I want to be able to do a quiz and answer questions
 As a user, I want to be able to save quizzes into a file
 
 As a user, I want to be able to load a file with quizzes
+
+## Phase 4 Task 2
+
+I have chosen to make my Question class (specifically the addAnswer method) more robust by making it throw a 
+checked exception if more than one Answer object added to it is set to true. This way it catches if one too many answers 
+can be true, which isn't expected for this quiz application, since multiple choices cannot be chosen at the same time.

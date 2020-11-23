@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.MultipleValidException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -29,8 +30,13 @@ public class Question {
 
     // MODIFIES: this
     // EFFECTS: adds an answer to the list that hasn't been added
-    public void addAnswer(Answer ans) {
+    public void addAnswer(Answer ans) throws MultipleValidException {
         if (!answerList.contains(ans)) {
+            for (Answer answer : answerList) {
+                if (answer.isValid() && ans.isValid()) {
+                    throw new MultipleValidException();
+                }
+            }
             answerList.add(ans);
         }
     }
@@ -73,7 +79,11 @@ public class Question {
             if (checkValid) {
                 nextAnswer.setValid();
             }
-            question.addAnswer(nextAnswer);
+            try {
+                question.addAnswer(nextAnswer);
+            } catch (MultipleValidException e) {
+                System.out.println("ERROR: question's answers have too many valid choices");
+            }
         }
     }
 }

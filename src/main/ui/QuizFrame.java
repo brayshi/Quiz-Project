@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.MultipleValidException;
 import model.Answer;
 import model.Question;
 import model.Quiz;
@@ -57,18 +58,39 @@ public class QuizFrame extends JFrame {
     // EFFECTS: initializes the first quiz and its objects.
     private void initial() {
         Quiz demoQuiz = new Quiz("Startup Quiz");
-        demoQuiz.addQuestion(new Question("Select the answer that says 'true'"));
-        demoQuiz.getQuestion(0).addAnswer(new Answer("false"));
-        demoQuiz.getQuestion(0).addAnswer(new Answer("true"));
-        demoQuiz.getQuestion(0).getAnswer(1).setValid();
+        createDemoQuestions(demoQuiz);
 
-        demoQuiz.addQuestion(new Question("yodel lay hee hoo"));
-        demoQuiz.getQuestion(1).addAnswer(new Answer("stop it"));
-        demoQuiz.getQuestion(1).addAnswer(new Answer("No keep yodeling"));
+        demoQuiz.getQuestion(0).getAnswer(1).setValid();
         demoQuiz.getQuestion(1).getAnswer(0).setValid();
 
         quizList = new QuizList("Quiz List");
         quizList.addQuiz(demoQuiz);
+    }
+
+    private void createDemoQuestions(Quiz demoQuiz) {
+        demoQuiz.addQuestion(new Question("Select the answer that says 'true'"));
+        try {
+            demoQuiz.getQuestion(0).addAnswer(new Answer("false"));
+        } catch (MultipleValidException e) {
+            System.out.println("failed to add new answer: Question already had one valid answer");
+        }
+        try {
+            demoQuiz.getQuestion(0).addAnswer(new Answer("true"));
+        } catch (MultipleValidException e) {
+            System.out.println("failed to add new answer: Question already had one valid answer");
+        }
+
+        demoQuiz.addQuestion(new Question("yodel lay hee hoo"));
+        try {
+            demoQuiz.getQuestion(1).addAnswer(new Answer("stop it"));
+        } catch (MultipleValidException e) {
+            System.out.println("failed to add new answer: Question already had one valid answer");
+        }
+        try {
+            demoQuiz.getQuestion(1).addAnswer(new Answer("No keep yodeling"));
+        } catch (MultipleValidException e) {
+            System.out.println("failed to add new answer: Question already had one valid answer");
+        }
     }
 
     // MODIFIES: this
@@ -251,6 +273,7 @@ public class QuizFrame extends JFrame {
             emptyRadioButton.setVisible(false);
             chooseAnswer.add(emptyRadioButton);
             buttonGroup.add(emptyRadioButton);
+            emptyRadioButton.addActionListener(e -> submitButton.setEnabled(true));
         }
     }
 
@@ -434,7 +457,7 @@ public class QuizFrame extends JFrame {
                                     ButtonGroup buttonGroup,
                                     JLabel confirmLabel) {
         for (int i = 0; i < 4; i++) {
-            createQuestion.add(new JLabel("Answer " + i));
+            createQuestion.add(new JLabel("Answer " + (i + 1)));
             JTextField answerField = new JTextField();
             JRadioButton radioButton = new JRadioButton();
             radioButton.setEnabled(false);
@@ -493,9 +516,7 @@ public class QuizFrame extends JFrame {
                 if (button.isSelected()) {
                     answer.setValid();
                 }
-                if (!answer.equals(new Answer(""))) {
-                    question.addAnswer(answer);
-                }
+                checkAnswerThrowsException(question, answer);
                 textFields.get(i).setText("");
                 button.setEnabled(false);
                 i++;
@@ -506,6 +527,16 @@ public class QuizFrame extends JFrame {
             confirmLabel.setForeground(Color.BLUE);
             confirmLabel.setText("Added question to the quiz");
         };
+    }
+
+    private void checkAnswerThrowsException(Question question, Answer answer) {
+        if (!answer.equals(new Answer(""))) {
+            try {
+                question.addAnswer(answer);
+            } catch (MultipleValidException multipleValidException) {
+                System.out.println("failed to add new answer: Question already had one valid answer");
+            }
+        }
     }
 
     // EFFECTS: when finish button is pressed, quiz is added to the quiz list. Sent back to the main menu
