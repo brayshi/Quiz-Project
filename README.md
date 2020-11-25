@@ -31,3 +31,12 @@ As a user, I want to be able to load a file with quizzes
 I have chosen to make my Question class (specifically the addAnswer method) more robust by making it throw a 
 checked exception if more than one Answer object added to it is set to true. This way it catches if one too many answers 
 can be true, which isn't expected for this quiz application, since multiple choices cannot be chosen at the same time.
+
+## Phase 4 Task 3
+
+- I would change the QuizFrame class by refactoring many of its methods for each Panel to smaller classes
+- I would create more of the panel's items as fields of the class so that helper methods wouldn't become convoluted.
+- These changes would also help decrease the amount of coupling that was created, since lots of bugs appear if one
+panel is changed.
+- Finally, I would delete the QuizList class and just make a field of List of quizzes when needed to decrease the 
+amount of convoluted code present in the ui.

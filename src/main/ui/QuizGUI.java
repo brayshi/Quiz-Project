@@ -2,7 +2,7 @@ package ui;
 
 import javax.swing.*;
 
-public class QuizGUI extends JFrame {
+public class QuizGUI {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

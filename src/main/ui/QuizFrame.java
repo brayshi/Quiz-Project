@@ -30,6 +30,7 @@ public class QuizFrame extends JFrame {
     private int initial;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private Quiz quiz;
 
     // EFFECTS: constructs a quiz frame of card layout. Begins with the main menu
     public QuizFrame() {
@@ -418,7 +419,7 @@ public class QuizFrame extends JFrame {
     // EFFECTS: accepts inputs for question and answer strings alongside which answer (singular) is the valid one
     private JPanel createQuestion() {
         ArrayList<JTextField> textFields = new ArrayList<>();
-        Quiz quiz = new Quiz(quizTitle);
+        quiz = new Quiz(quizTitle);
 
         JPanel createQuestion = new JPanel();
         createQuestion.setLayout(new GridLayout(0, 3));
@@ -440,8 +441,8 @@ public class QuizFrame extends JFrame {
         JButton addButton = new JButton("Add components");
         JButton finishButton = new JButton("Finish quiz (add last question before clicking!)");
 
-        finishButton.addActionListener(finishListener(confirmLabel, quiz, buttonGroup, textFields));
-        addButton.addActionListener(confirmActionListener(quiz, textFields, confirmLabel, buttonGroup));
+        finishButton.addActionListener(finishListener(confirmLabel, buttonGroup, textFields));
+        addButton.addActionListener(confirmActionListener(textFields, confirmLabel, buttonGroup));
 
         createQuestion.add(addButton);
         createQuestion.add(finishButton);
@@ -502,8 +503,7 @@ public class QuizFrame extends JFrame {
     }
 
     // EFFECTS: when confirm button is pressed, adds question with all of its answers to the quiz
-    private ActionListener confirmActionListener(Quiz quiz,
-                                                 ArrayList<JTextField> textFields,
+    private ActionListener confirmActionListener(ArrayList<JTextField> textFields,
                                                  JLabel confirmLabel,
                                                  ButtonGroup buttonGroup) {
 
@@ -541,7 +541,6 @@ public class QuizFrame extends JFrame {
 
     // EFFECTS: when finish button is pressed, quiz is added to the quiz list. Sent back to the main menu
     private ActionListener finishListener(JLabel confirmLabel,
-                                          Quiz quiz,
                                           ButtonGroup buttonGroup,
                                           ArrayList<JTextField> textFields) {
 
@@ -558,11 +557,12 @@ public class QuizFrame extends JFrame {
             confirmLabel.setText("");
             quiz.setName(quizTitle);
             quizList.addQuiz(quiz);
-            cardLayout.show(cards, "0");
             cards.remove(chooseQuiz());
-            cards.add(chooseQuiz(), "1");
             cards.add(quizTester(quizList.getQuiz(initial)), Integer.toString(initial + 3));
             initial++;
+            cards.add(chooseQuiz(), "1");
+            quiz = new Quiz("blank");
+            cardLayout.show(cards, "0");
         };
     }
 
