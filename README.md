@@ -40,3 +40,8 @@ can be true, which isn't expected for this quiz application, since multiple choi
 panel is changed.
 - Finally, I would delete the QuizList class and just make a field of List of quizzes when needed to decrease the 
 amount of convoluted code present in the ui.
+  
+## Dependencies
+
+- JSON library (https://github.com/stleary/JSON-java)
+- JUnit Jupiter 5.4.2
