@@ -3,7 +3,6 @@ package model;
 import org.json.JSONObject;
 
 import java.util.Objects;
-// Answers
 // Represents an answer within a question
 public class Answer {
     private String ans;
